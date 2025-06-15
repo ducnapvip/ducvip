@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Facebook Comment Link Generator</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     body {
@@ -26,31 +26,32 @@
     .container {
       width: 100%;
       max-width: 900px;
-      background: rgba(255, 255, 255, 0.01); /* giảm độ mờ để ảnh nền rõ hơn */
-      backdrop-filter: blur(px);
-      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
       padding: 30px;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
       color: #fff;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
     }
 
     h2 {
+      font-size: 30px;
       text-align: center;
-      font-size: 32px;
-      margin-bottom: 24px;
-      text-shadow: 0 0 8px rgba(0, 200, 255, 0.7);
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px rgba(0, 200, 255, 0.8);
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    h2:hover {
+      transform: scale(1.03);
+      text-shadow: 0 0 15px #00d4ff, 0 0 25px #00bfff;
     }
 
     label {
-      margin-top: 16px;
       display: block;
       font-weight: 600;
+      margin-top: 16px;
     }
 
     textarea, input {
@@ -60,7 +61,7 @@
       border-radius: 14px;
       border: none;
       font-size: 15px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       color: #333;
       margin-bottom: 16px;
     }
@@ -75,8 +76,8 @@
       background: linear-gradient(135deg, #00d2ff, #3a7bd5);
       color: white;
       cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
       margin-bottom: 10px;
+      transition: 0.3s ease;
     }
 
     button:hover {
@@ -84,26 +85,35 @@
       box-shadow: 0 6px 18px rgba(0, 200, 255, 0.3);
     }
 
-   #output {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  white-space: pre-wrap;
-  color: #333;
-  font-size: 14px;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
-  max-height: 300px;         /* ✅ Giới hạn chiều cao */
-  overflow-y: auto;          /* ✅ Cho phép cuộn dọc */
-  overflow-x: auto;          /* ✅ Cuộn ngang nếu quá dài */
-}
-
+    #output {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      white-space: pre-wrap;
+      color: #333;
+      font-size: 14px;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+      max-height: 300px;
+      overflow-y: auto;
+      overflow-x: auto;
+    }
 
     #stats {
       margin-top: 12px;
       font-weight: bold;
       text-align: center;
       color: #fff;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
@@ -127,11 +137,17 @@
   </div>
 
   <script>
-    function generateRandomString(length = 100) {
-      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
-      let result = "AZ";
-      for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    function generateCFTToken(groupCount = 4, groupLength = 10) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      const separators = ['-', '_'];
+      let result = 'AZ';
+      for (let i = 0; i < groupCount; i++) {
+        let group = '';
+        for (let j = 0; j < groupLength; j++) {
+          group += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        const separator = i < groupCount - 1 ? separators[Math.floor(Math.random() * separators.length)] : '';
+        result += group + separator;
       }
       return result;
     }
@@ -158,7 +174,7 @@
 
         for (let i = 0; i < linkCount; i++) {
           let newParams = new URLSearchParams();
-          newParams.set("__cft__[0]", generateRandomString());
+          newParams.set("__cft__[0]", generateCFTToken());
           newParams.set("__tn__", "R-R");
           newParams.set("comment_id", commentId);
           result.push(`${base}?${newParams.toString()}`);
