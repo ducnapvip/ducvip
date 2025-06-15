@@ -3,198 +3,287 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Facebook Comment Link Generator</title>
+  <title>Tool Gộp Comment ID</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: url('https://hoanghamobile.com/tin-tuc/wp-content/webp-express/webp-images/uploads/2024/07/anh-phong-canh-anime-17.jpg.webp') no-repeat center center fixed;
+      background-image: url("2.jpg");
       background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
+      padding: 40px 20px;
+      color: #f1f5f9;
+      font-size: 16px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.75);
     }
 
     .container {
-      width: 100%;
       max-width: 900px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.01);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(12px);
       padding: 30px;
-      color: #fff;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
     }
 
     h2 {
-      font-size: 30px;
       text-align: center;
       margin-bottom: 25px;
-      text-shadow: 0 0 10px rgba(0, 200, 255, 0.8);
-      transition: 0.3s ease;
-      cursor: pointer;
-    }
-
-    h2:hover {
-      transform: scale(1.03);
-      text-shadow: 0 0 15px #00d4ff, 0 0 25px #00bfff;
+      color: #60a5fa;
+      font-weight: 700;
+      font-size: 28px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     label {
       display: block;
+      margin: 16px 0 6px;
       font-weight: 600;
-      margin-top: 16px;
+      font-size: 15px;
+      color: #e2e8f0;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
     }
 
-    textarea, input {
+    textarea {
       width: 100%;
-      margin-top: 6px;
-      padding: 12px;
-      border-radius: 14px;
-      border: none;
-      font-size: 15px;
-      background: rgba(255, 255, 255, 0.92);
-      color: #333;
-      margin-bottom: 16px;
+      min-height: 110px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #d1d5db;
+      resize: vertical;
+      font-size: 14px;
+    }
+
+    textarea:focus {
+      border-color: #3b82f6;
+      outline: none;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 20px;
     }
 
     button {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      font-weight: 600;
-      border: none;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
       color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 30px;
       cursor: pointer;
-      margin-bottom: 10px;
-      transition: 0.3s ease;
+      margin-top: 10px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      flex: 1 1 48%;
     }
 
     button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 200, 255, 0.3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
-    #output {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: rgba(255, 255, 255, 0.95);
-      border-radius: 12px;
-      white-space: pre-wrap;
-      color: #333;
-      font-size: 14px;
-      box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
-      max-height: 300px;
-      overflow-y: auto;
-      overflow-x: auto;
+    .result, .history {
+      margin-top: 30px;
     }
 
-    #stats {
-      margin-top: 12px;
-      font-weight: bold;
-      text-align: center;
-      color: #fff;
+    .result textarea {
+      height: 200px;
+      background: #f9fafb;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .history-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .history-content {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .delete-button {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      font-size: 13px;
+      border-radius: 8px;
+      margin-top: 10px;
+      cursor: pointer;
     }
 
     @media (max-width: 600px) {
-      .container {
-        padding: 20px;
+      .button-group {
+        flex-direction: column;
       }
-
-      h2 {
-        font-size: 24px;
+      button {
+        flex: 1 1 100%;
+        margin-bottom: 10px;
       }
     }
   </style>
 </head>
+
 <body>
+  <audio id="bg-music" autoplay loop>
+    <source src="banduyen.mp3" type="audio/mpeg">
+    Trình duyệt của bạn không hỗ trợ âm thanh.
+  </audio>
+
   <div class="container">
-    <h2>🚀 Facebook Comment Link Generator</h2>
+    <div style="text-align: center; margin-bottom: 20px;">
+      <button onclick="toggleMusic()" style="background: #9333ea;">🎵 Tắt / Bật Nhạc</button>
+    </div>
 
-    <label>📥 Nhập các link Facebook (mỗi dòng 1 link):</label>
-    <textarea id="inputLinks" rows="5" placeholder="https://www.facebook.com/..."></textarea>
+    <h2>🎯 Tool Gộp Comment ID vào Link</h2>
 
-    <label>🔢 Số lượng link muốn tạo cho mỗi link (mặc định 100):</label>
-    <input type="number" id="linkCount" placeholder="VD: 50">
+    <label>🔗 Link có chứa <code>comment_id</code> (mỗi dòng 1 link):</label>
+    <textarea id="sourceLinks" placeholder="Dán các link có comment_id tại đây..."></textarea>
 
-    <button onclick="generateLinks()">🎯 Tạo Link</button>
-    <button onclick="copyToClipboard()">📋 Sao chép tất cả</button>
+    <label>🔗 Link cần thêm <code>comment_id</code> (mỗi dòng 1 link):</label>
+    <textarea id="targetLinks" placeholder="Dán các link chưa có comment_id tại đây..."></textarea>
 
-    <div id="stats"></div>
+    <div class="button-group">
+      <button onclick="processLinks()">➡️ Tạo link mới</button>
+      <button onclick="copyResults()">📋 Copy tất cả</button>
+    </div>
 
-    <label style="margin-top: 20px;">📤 Kết quả:</label>
-    <div id="output"></div>
+    <div class="result">
+      <label>✅ Kết quả:</label>
+      <textarea id="result" readonly></textarea>
+    </div>
+
+    <div class="history">
+      <label>🕘 Lịch sử:</label>
+      <div id="historyList"></div>
+      <button class="delete-button" onclick="clearHistory()">🗑️ Xóa toàn bộ lịch sử</button>
+    </div>
   </div>
 
   <script>
-    function generateCFTToken(groupCount = 4, groupLength = 10) {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      const separators = ['-', '_'];
-      let result = 'AZ';
-      for (let i = 0; i < groupCount; i++) {
-        let group = '';
-        for (let j = 0; j < groupLength; j++) {
-          group += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        const separator = i < groupCount - 1 ? separators[Math.floor(Math.random() * separators.length)] : '';
-        result += group + separator;
-      }
-      return result;
+    function toggleMusic() {
+      const audio = document.getElementById("bg-music");
+      audio.paused ? audio.play() : audio.pause();
     }
 
-    function generateLinks() {
-      const rawLinks = document.getElementById("inputLinks").value.trim();
-      const linkCount = parseInt(document.getElementById("linkCount").value) || 100;
-      const outputDiv = document.getElementById("output");
-      const statsDiv = document.getElementById("stats");
+    function extractCommentId(url) {
+      try {
+        const urlObj = new URL(url);
+        const params = new URLSearchParams(urlObj.search);
+        return params.get("comment_id");
+      } catch {
+        return null;
+      }
+    }
 
-      if (!rawLinks) {
-        alert("Vui lòng nhập ít nhất một link Facebook.");
-        return;
+    function cleanUrl(url) {
+      try {
+        const urlObj = new URL(url);
+        if (/\/videos\/\d+\/$/.test(urlObj.pathname)) {
+          urlObj.pathname = urlObj.pathname.replace(/\/$/, "");
+        }
+        return urlObj.toString();
+      } catch {
+        return url;
+      }
+    }
+
+    function addCommentIdToUrl(url, commentId) {
+      try {
+        const cleaned = cleanUrl(url);
+        const urlObj = new URL(cleaned);
+        const params = new URLSearchParams(urlObj.search);
+        params.set("comment_id", commentId);
+        urlObj.search = params.toString();
+        return urlObj.toString();
+      } catch {
+        return url;
+      }
+    }
+
+    function processLinks() {
+      const source = document.getElementById("sourceLinks").value.trim().split("\n").filter(Boolean);
+      const targets = document.getElementById("targetLinks").value.trim().split("\n").filter(Boolean);
+      const resultBox = document.getElementById("result");
+
+      const commentIds = source.map(link => extractCommentId(link)).filter(Boolean);
+      const output = [];
+
+      for (let i = 0; i < targets.length; i++) {
+        const target = targets[i];
+        const commentId = commentIds[i % commentIds.length];
+        output.push(commentId ? addCommentIdToUrl(target, commentId) : cleanUrl(target));
       }
 
-      const links = rawLinks.split("\n").map(l => l.trim()).filter(l => l);
-      let result = [];
+      const result = output.join("\n");
+      resultBox.value = result;
 
-      links.forEach(link => {
-        let base = link.split("?")[0];
-        let params = new URLSearchParams(link.split("?")[1] || "");
-        let commentId = params.get("comment_id");
-        if (!commentId) return;
+      const historyItem = {
+        time: new Date().toLocaleString(),
+        source: source.join("\n"),
+        target: targets.join("\n"),
+        result: result
+      };
 
-        for (let i = 0; i < linkCount; i++) {
-          let newParams = new URLSearchParams();
-          newParams.set("__cft__[0]", generateCFTToken());
-          newParams.set("__tn__", "R-R");
-          newParams.set("comment_id", commentId);
-          result.push(`${base}?${newParams.toString()}`);
-        }
+      const history = JSON.parse(localStorage.getItem("linkHistory") || "[]");
+      history.unshift(historyItem);
+      localStorage.setItem("linkHistory", JSON.stringify(history));
+      renderHistory();
+    }
+
+    function copyResults() {
+      const resultBox = document.getElementById("result");
+      resultBox.select();
+      document.execCommand("copy");
+      alert("✅ Đã copy tất cả link đã xử lý!");
+    }
+
+    function renderHistory() {
+      const history = JSON.parse(localStorage.getItem("linkHistory") || "[]");
+      const historyList = document.getElementById("historyList");
+      historyList.innerHTML = "";
+
+      history.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "history-item";
+        div.innerHTML = `🕓 ${item.time}`;
+        const content = document.createElement("div");
+        content.className = "history-content";
+        content.innerHTML = `
+          <b>🔗 Nguồn:</b><br><textarea readonly>${item.source}</textarea><br>
+          <b>🎯 Đích:</b><br><textarea readonly>${item.target}</textarea><br>
+          <b>✅ Kết quả:</b><br><textarea readonly>${item.result}</textarea>
+        `;
+        div.onclick = () => {
+          content.style.display = content.style.display === "none" ? "block" : "none";
+        };
+        div.appendChild(content);
+        historyList.appendChild(div);
       });
-
-      outputDiv.textContent = result.join("\n");
-      statsDiv.textContent = `✅ Đã tạo ${result.length} link.`;
     }
 
-    function copyToClipboard() {
-      const output = document.getElementById("output").textContent;
-      if (!output) {
-        alert("Không có nội dung để sao chép.");
-        return;
+    function clearHistory() {
+      if (confirm("Bạn chắc chắn muốn xóa toàn bộ lịch sử?")) {
+        localStorage.removeItem("linkHistory");
+        renderHistory();
       }
-      navigator.clipboard.writeText(output)
-        .then(() => alert("📋 Đã sao chép vào clipboard!"))
-        .catch(err => alert("❌ Lỗi sao chép: " + err));
     }
+
+    renderHistory();
   </script>
 </body>
 </html>
