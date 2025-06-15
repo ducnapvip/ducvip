@@ -154,10 +154,15 @@
     Trình duyệt của bạn không hỗ trợ âm thanh.
   </audio>
 
-  <div class="container">
-    <div style="text-align: center; margin-bottom: 20px;">
-      <button onclick="toggleMusic()" style="background: #9333ea;">🎵 Tắt / Bật Nhạc</button>
-    </div>
+  <div style="text-align: center; margin-bottom: 20px;">
+  <button onclick="toggleMusic()" style="background: #9333ea; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-size: 14px; cursor: pointer;">
+    🎵 Tắt / Bật Nhạc
+  </button>
+  <button onclick="changeSong()" style="background: #3b82f6; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-size: 14px; cursor: pointer; margin-left: 10px;">
+    🔄 Đổi Nhạc
+  </button>
+</div>
+
 
     <h2>🎯 Tool Gộp Comment ID vào Link</h2>
 
@@ -184,7 +189,28 @@
     </div>
   </div>
 
+  
   <script>
+  const songs = ["banduyen.mp3", "nghe bài trình.mp3", "domdom.mp3", "hoahaiduong.mp3", "hongnhan.mp3", "thienli.mp3"]; // thêm bài khác tại đây
+  let currentSongIndex = 0;
+
+  function toggleMusic() {
+    const audio = document.getElementById("bg-music");
+    if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  }
+
+  function changeSong() {
+    const audio = document.getElementById("bg-music");
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    audio.src = songs[currentSongIndex];
+    audio.play();
+  }
+
+
     function toggleMusic() {
       const audio = document.getElementById("bg-music");
       audio.paused ? audio.play() : audio.pause();
